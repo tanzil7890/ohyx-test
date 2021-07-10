@@ -7,12 +7,18 @@ import { Ionicons } from '@expo/vector-icons';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { createStackNavigator } from '@react-navigation/stack';
 import * as React from 'react';
+import {Image} from 'react-native'
 
 import Colors from '../constants/Colors';
 import useColorScheme from '../hooks/useColorScheme';
-import TabOneScreen from '../screens/TabOneScreen';
+import HomeScreen from '../screens/HomeScreen';
 import TabTwoScreen from '../screens/TabTwoScreen';
 import { BottomTabParamList, TabOneParamList, TabTwoParamList } from '../types';
+import { AntDesign } from '@expo/vector-icons'; 
+import { Entypo } from '@expo/vector-icons';
+import { MaterialIcons } from '@expo/vector-icons';
+import { MaterialCommunityIcons } from '@expo/vector-icons';
+import HomeStack from './HomeStack'
 
 const BottomTab = createBottomTabNavigator<BottomTabParamList>();
 
@@ -22,19 +28,48 @@ export default function BottomTabNavigator() {
   return (
     <BottomTab.Navigator
       initialRouteName="TabOne"
-      tabBarOptions={{ activeTintColor: Colors[colorScheme].tint }}>
+      tabBarOptions={{ activeTintColor: '#1F3EF4',
+      inactiveTintColor: '#000',
+      labelPosition: 'below-icon' }}
+      >
       <BottomTab.Screen
-        name="TabOne"
-        component={TabOneNavigator}
+        name="Home"
+        component={HomeStack}
         options={{
-          tabBarIcon: ({ color }) => <TabBarIcon name="ios-code" color={color} />,
+          tabBarIcon: ({ color }) => <AntDesign name="home" size={24} color={color} />,
         }}
       />
       <BottomTab.Screen
-        name="TabTwo"
+        name="Categories"
         component={TabTwoNavigator}
         options={{
-          tabBarIcon: ({ color }) => <TabBarIcon name="ios-code" color={color} />,
+          tabBarIcon: ({ color }) => <Entypo name="list" size={24} color={color} />,
+        }}
+      />
+      {/* <MaterialIcons name="book-online" size={24} color={color} /> */}
+      <BottomTab.Screen
+        name="Booking"
+        component={TabTwoNavigator}
+        options={{
+          tabBarIcon: ({ color }) => <Image 
+            source={require('../assets/icon/booking.png')}
+            style={{width: 24, height: 24}}
+            
+          />,
+        }}
+      />
+      <BottomTab.Screen
+        name="Favourite"
+        component={TabTwoNavigator}
+        options={{
+          tabBarIcon: ({ color }) => <MaterialIcons name="favorite" size={24} color={color} />,
+        }}
+      />
+      <BottomTab.Screen
+        name="Account"
+        component={TabTwoNavigator}
+        options={{
+          tabBarIcon: ({ color }) => <MaterialCommunityIcons name="account-cog" size={24} color={color} />,
         }}
       />
     </BottomTab.Navigator>
@@ -56,7 +91,7 @@ function TabOneNavigator() {
     <TabOneStack.Navigator>
       <TabOneStack.Screen
         name="TabOneScreen"
-        component={TabOneScreen}
+        component={HomeScreen}
         options={{ headerTitle: 'Tab One Title' }}
       />
     </TabOneStack.Navigator>
